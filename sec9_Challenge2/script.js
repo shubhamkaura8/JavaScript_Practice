@@ -101,31 +101,31 @@ const game = {
 // GOOD LUCK
 
 //1
-for (let [goal, playerName] of game.scored.entries()) {
-  console.log(`Goal ${goal + 1}: ${playerName}`);
-}
+// for (let [goal, playerName] of game.scored.entries()) {
+//   console.log(`Goal ${goal + 1}: ${playerName}`);
+// }
 
-//2
-let average = 0;
-const odds = Object.values(game.odds);
-for (let odd of odds) {
-  average += odd;
-}
-average /= odds.length;
-console.log(average);
+// //2
+// let average = 0;
+// const odds = Object.values(game.odds);
+// for (let odd of odds) {
+//   average += odd;
+// }
+// average /= odds.length;
+// console.log(average);
 
-//3
-for (const [team, odd] of Object.entries(game.odds)) {
-  const teamStr = team === 'x' ? 'Draw' : `Victory ${game[team]}`;
-  console.log(`Odd of ${teamStr} ${odd}`);
-}
+// //3
+// for (const [team, odd] of Object.entries(game.odds)) {
+//   const teamStr = team === 'x' ? 'Draw' : `Victory ${game[team]}`;
+//   console.log(`Odd of ${teamStr} ${odd}`);
+// }
 
-//Bonus
-let scorers = {};
-for (const player of game.scored) {
-  scorers[player] ? scorers[player]++ : (scorers[player] = 1);
-}
-console.log(scorers);
+// //Bonus
+// let scorers = {};
+// for (const player of game.scored) {
+//   scorers[player] ? scorers[player]++ : (scorers[player] = 1);
+// }
+// console.log(scorers);
 
 //code challenge 3
 // Let's continue with our football betting app! This time, we have a map called
