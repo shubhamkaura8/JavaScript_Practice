@@ -143,33 +143,82 @@ const game = {
 // whether it's in the first half or second half (after 45 min) of the game, like this:
 // [FIRST HALF] 17: ⚽ GOAL
 // GOOD LUCK �
-const gameEvents = new Map([
-  [17, '⚽ GOAL'],
-  [36, '� Substitution'],
-  [47, '⚽ GOAL'],
-  [61, '� Substitution'],
-  [64, '� Yellow card'],
-  [69, '� Red card'],
-  [70, '� Substitution'],
-  [72, '� Substitution'],
-  [76, '⚽ GOAL'],
-  [80, '⚽ GOAL'],
-  [92, '� Yellow card'],
-]);
 
-let events = [...new Set(gameEvents.values())];
-console.log(events);
+// const gameEvents = new Map([
+//   [17, '⚽ GOAL'],
+//   [36, '� Substitution'],
+//   [47, '⚽ GOAL'],
+//   [61, '� Substitution'],
+//   [64, '� Yellow card'],
+//   [69, '� Red card'],
+//   [70, '� Substitution'],
+//   [72, '� Substitution'],
+//   [76, '⚽ GOAL'],
+//   [80, '⚽ GOAL'],
+//   [92, '� Yellow card'],
+// ]);
 
-gameEvents.delete(64);
+// let events = [...new Set(gameEvents.values())];
+// console.log(events);
 
-console.log(
-  `An event happened, on average, every ${90 / gameEvents.size} minutes.`
-);
+// gameEvents.delete(64);
 
-for (let [time, eventDescription] of gameEvents) {
-  console.log(
-    time <= 45
-      ? `[First Half] ${time} : ${eventDescription}`
-      : `[Second Half] ${time} : ${eventDescription}`
-  );
+// console.log(
+//   `An event happened, on average, every ${90 / gameEvents.size} minutes.`
+// );
+
+// for (let [time, eventDescription] of gameEvents) {
+//   console.log(
+//     time <= 45
+//       ? `[First Half] ${time} : ${eventDescription}`
+//       : `[Second Half] ${time} : ${eventDescription}`
+//   );
+// }
+
+// Coding Challenge #4
+// Write a program that receives a list of variable names written in underscore_case
+// and convert them to camelCase.
+// The input will come from a textarea inserted into the DOM (see code below to
+// insert the elements), and conversion will happen when the button is pressed.
+// Test data (pasted to textarea, including spaces):
+// underscore_case
+// first_name
+// Some_Variable
+//  calculate_AGE
+// delayed_departure
+// Should produce this output (5 separate console.log outputs):
+// underscoreCase ✅
+// firstName ✅✅
+// someVariable ✅✅✅
+// calculateAge ✅✅✅✅
+// delayedDeparture ✅✅✅✅✅
+// Hints:
+// § Remember which character defines a new line in the textarea �
+// § The solution only needs to work for a variable made out of 2 words, like a_b
+// § Start without worrying about the ✅. Tackle that only after you have the variable
+// name conversion working �
+// § This challenge is difficult on purpose, so start watching the solution in case
+// you're stuck. Then pause and continue!
+// Afterwards, test with your own test data!
+// GOOD LUCK �
+
+document.body.append(document.createElement('textarea'));
+document.body.append(document.createElement('button'));
+
+document
+  .querySelector('button')
+  .addEventListener('click', underSdcoreToCamelCase);
+
+function underSdcoreToCamelCase() {
+  const strVariables = document.querySelector('textarea').value.split('\n');
+
+  for (let [i, strVariable] of strVariables.entries()) {
+    let [first, second] = strVariable.toLowerCase().trim().split('_');
+
+    const output = `${first}${second.replace(
+      second[0],
+      second[0].toUpperCase()
+    )}`;
+    console.log(`${output.padEnd(20)}${'✅'.repeat(i + 1)}`);
+  }
 }
