@@ -30,16 +30,38 @@
 // 5. Bonus: Use the 'displayResults' method to display the 2 arrays in the test
 // data. Use both the 'array' and the 'string' option. Do not put the arrays in the poll
 // object! So what should the this keyword look like in this situation?
-// The Complete JavaScript Course 21
 // Test data for bonus:
 // § Data 1: [5, 2, 3]
 // § Data 2: [1, 5, 3, 9, 6, 1]
 // Hints: Use many of the tools you learned about in this and the last section �
 // GOOD LUCK �
-//  const poll = {
-//  question: "What is your favourite programming language?",
-//  options: ["0: JavaScript", "1: Python", "2: Rust", "3:
-//  C++"],
-//  // This generates [0, 0, 0, 0]. More in the next section!
-//  answers: new Array(4).fill(0),
-//  }
+const poll = {
+  question: 'What is your favourite programming language?',
+  options: ['0: JavaScript', '1: Python', '2: Rust', '3: C++'],
+  // This generates [0, 0, 0, 0]. More in the next section!
+  answers: new Array(4).fill(0),
+  registerNewNumber() {
+    const selectedOption = Number(
+      prompt(`${this.question}\n${this.options.join('\n')}`)
+    );
+    typeof selectedOption === 'number' &&
+      selectedOption < this.options.length &&
+      this.answers[selectedOption]++;
+    this.displayResults();
+    this.displayResults('string');
+  },
+  displayResults(type = 'array') {
+    if (type === 'array') {
+      console.log(this.answers);
+    } else if (type === 'string') {
+      console.log(`Poll results are ${this.answers.join(', ')}`);
+    }
+  },
+};
+
+document
+  .querySelector('.poll')
+  .addEventListener('click', poll.registerNewNumber.bind(poll));
+
+poll.displayResults.call({ answers: [5, 2, 3] });
+poll.displayResults.call({ answers: [5, 2, 3] }, 'string');
