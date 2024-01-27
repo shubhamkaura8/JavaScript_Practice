@@ -1,41 +1,41 @@
 'use strict';
 
-const btn = document.querySelector('.btn-country');
-const countriesContainer = document.querySelector('.countries');
+// const btn = document.querySelector('.btn-country');
+// const countriesContainer = document.querySelector('.countries');
 
-// ///////////////////////////////////////
+// // ///////////////////////////////////////
 
-const renderCountry = function (data) {
-  const html = `<article class="country">
-    <img class="country__img" src="${data.flags.svg}" />
-    <div class="country__data">
-      <h3 class="country__name">${data.name.official}</h3>
-      <h4 class="country__region">${data.region}</h4>
-      <p class="country__row"><span>👫</span>${(
-        +data.population / 1000000
-      ).toFixed(1)}</p>
-      <p class="country__row"><span>🗣️</span>${
-        Object.values(data.languages)[0]
-      }</p>
-      <p class="country__row"><span>💰</span>${
-        Object.values(data.currencies)[0].name
-      }</p>
-    </div>
-  </article>`;
+// const renderCountry = function (data) {
+//   const html = `<article class="country">
+//     <img class="country__img" src="${data.flags.svg}" />
+//     <div class="country__data">
+//       <h3 class="country__name">${data.name.official}</h3>
+//       <h4 class="country__region">${data.region}</h4>
+//       <p class="country__row"><span>👫</span>${(
+//         +data.population / 1000000
+//       ).toFixed(1)}</p>
+//       <p class="country__row"><span>🗣️</span>${
+//         Object.values(data.languages)[0]
+//       }</p>
+//       <p class="country__row"><span>💰</span>${
+//         Object.values(data.currencies)[0].name
+//       }</p>
+//     </div>
+//   </article>`;
 
-  countriesContainer.insertAdjacentHTML('beforeend', html);
-  countriesContainer.style.opacity = 1;
-};
+//   countriesContainer.insertAdjacentHTML('beforeend', html);
+//   countriesContainer.style.opacity = 1;
+// };
 
-const getCountryData = function (country) {
-  fetch(`https://restcountries.com/v3.1/name/${country}`)
-    .then(response => response.json())
-    .then(data => {
-      console.log(data[0]);
-      renderCountry(data[0]);
-    })
-    .catch(err => alert(err));
-};
+// const getCountryData = function (country) {
+//   fetch(`https://restcountries.com/v3.1/name/${country}`)
+//     .then(response => response.json())
+//     .then(data => {
+//       console.log(data[0]);
+//       renderCountry(data[0]);
+//     })
+//     .catch(err => alert(err));
+// };
 
 // Coding Challenge #1
 // In this challenge you will build a function 'whereAmI' which renders a country
@@ -75,24 +75,24 @@ const getCountryData = function (country) {
 // § Coordinates 3: -33.933, 18.474
 // GOOD LUCK
 
-const whereAmI = function (lat, lng) {
-  fetch(
-    `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}`
-  )
-    .then(response => {
-      if (!response.ok) throw new Error('Too many requests!');
-      return response.json();
-    })
-    .then(data => {
-      console.log(`You are in ${data.city} ${data.countryName} `);
-      return data.countryName;
-    })
-    .then(data => getCountryData(data))
-    .catch(err => console.log(`Something went wrong! ${err}`));
-};
+// const whereAmI = function (lat, lng) {
+//   fetch(
+//     `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}`
+//   )
+//     .then(response => {
+//       if (!response.ok) throw new Error('Too many requests!');
+//       return response.json();
+//     })
+//     .then(data => {
+//       console.log(`You are in ${data.city} ${data.countryName} `);
+//       return data.countryName;
+//     })
+//     .then(data => getCountryData(data))
+//     .catch(err => console.log(`Something went wrong! ${err}`));
+// };
 
-// getCountryData();
-whereAmI(52.508, 13.381);
+// // getCountryData();
+// whereAmI(52.508, 13.381);
 
 // Coding Challenge #2
 // For this challenge you will actually have to watch the video! Then, build the image
@@ -124,3 +124,35 @@ whereAmI(52.508, 13.381);
 // image path. Set the network speed to “Fast 3G” in the dev tools Network tab,
 // otherwise images load too fast
 // GOOD LUCK �
+
+let img;
+
+const wait = function (second) {
+  return new Promise(resolve => setTimeout(resolve, second * 1000));
+};
+
+const createImage = function (imgPath) {
+  return new Promise(function (resolve, reject) {
+    if (!img) img = document.createElement('img');
+    img.src = imgPath;
+    img.style.display = 'flex';
+    console.log(img);
+    img.onload = () => resolve(img);
+    img.onerror = () => reject(new Error('Please provide correct path info'));
+  });
+};
+
+createImage('img/img-1.jpg')
+  .then(img => {
+    document.querySelector('.images').insertAdjacentElement('beforeend', img);
+  })
+  .then(() => wait(2))
+  .then(() => {
+    img.style.display = 'none';
+    return createImage('img/img-2.jpg');
+  })
+  .then(() => wait(2))
+  .then(() => {
+    img.style.display = 'none';
+  })
+  .catch(err => console.error(err));
